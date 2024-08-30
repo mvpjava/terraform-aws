@@ -11,6 +11,12 @@ provider "aws" {
   region = "eu-west-2"
 }
 
+variable "server_port" {
+  description = "SG Inbound port number"
+  type = number
+  default = 80
+}
+
 resource "aws_instance" "terraform-ec2" {
   ami               = "ami-0c0493bbac867d427"
   count             = 1
@@ -39,8 +45,8 @@ resource "aws_security_group" "allow-http" {
   name = "app-web-sg-allow-http"
 
   ingress  {
-    from_port = 80
-    to_port = 80
+    from_port = var.server_port
+    to_port = var.server_port
     protocol = "tcp"
     cidr_blocks = [ "0.0.0.0/0" ]
   }
@@ -56,4 +62,15 @@ resource "aws_security_group" "allow-http" {
     env = "demo"
   }
 
+}
+
+
+output "public_ip" {
+  /* 
+    Since the aws_instance.terraform-ec2 resource is defined with the count attribute, 
+    which means there can be multiple instances of this resource. 
+    To correctly reference the public IP of a specific instance, you need to specify the index of the instance you're interested in.
+  */
+  value = aws_instance.terraform-ec2[0].public_ip
+  description = "EC2 public IP to view deployed Web Server"
 }
