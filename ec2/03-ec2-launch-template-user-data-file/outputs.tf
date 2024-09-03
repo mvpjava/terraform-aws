@@ -4,11 +4,11 @@ output "public_ip" {
     which means there can be multiple instances of this resource. 
     To correctly reference the public IP of a specific instance, you need to specify the index of the instance you're interested in.
   */
-  value = aws_instance.apache-webserver[0].public_ip
+  value       = aws_instance.apache-webserver[0].public_ip
   description = "EC2 public IP to view deployed Web Server"
 }
 
 output "security_group" {
-  value = aws_security_group.allow-http.id
+  value       = aws_security_group.allow-http.id
   description = "EC2 instances Security Group ID"
 }
