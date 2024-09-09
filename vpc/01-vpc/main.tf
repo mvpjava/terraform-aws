@@ -1,13 +1,13 @@
-resource "aws_vpc" "test" {
+resource "aws_vpc" "this" {
   cidr_block = var.cidr_block
 
   tags = {
-    Name = "TEST VPC"
+    Name = "Dev VPC for Project ACME"
   }
 }
 
 resource "aws_internet_gateway" "gw" {
-  vpc_id = aws_vpc.test.id
+  vpc_id = aws_vpc.this.id
 
   tags = {
     Name = " VPC Internet Gateway"
@@ -15,10 +15,11 @@ resource "aws_internet_gateway" "gw" {
 }
 
 resource "aws_subnet" "public" {
-  count             = length(var.public_subnet_cidrs)
-  vpc_id            = aws_vpc.test.id
-  cidr_block        = element(var.public_subnet_cidrs, count.index)
-  availability_zone = element(var.azs, count.index)
+  count                   = length(var.public_subnet_cidrs)
+  vpc_id                  = aws_vpc.this.id
+  cidr_block              = element(var.public_subnet_cidrs, count.index)
+  availability_zone       = element(var.azs, count.index)
+  map_public_ip_on_launch = true
 
   tags = {
     Name = "Public Subnet ${count.index + 1}"
@@ -27,10 +28,11 @@ resource "aws_subnet" "public" {
 
 resource "aws_subnet" "private" {
   count                   = length(var.private_subnet_cidrs)
-  vpc_id                  = aws_vpc.test.id
+  vpc_id                  = aws_vpc.this.id
   cidr_block              = element(var.private_subnet_cidrs, count.index)
   availability_zone       = element(var.azs, count.index)
   map_public_ip_on_launch = false
+
   tags = {
     Name = "Private Subnet ${count.index + 1}"
   }
@@ -38,7 +40,7 @@ resource "aws_subnet" "private" {
 }
 
 resource "aws_route_table" "public" {
-  vpc_id = aws_vpc.test.id
+  vpc_id = aws_vpc.this.id
 
   route {
     cidr_block = "0.0.0.0/0"
