@@ -1,5 +1,7 @@
 #!/bin/bash -xe
 
+#terraform init
+#terraform plan
 #terraform apply -var "server_port=80"
 
 terraform apply
