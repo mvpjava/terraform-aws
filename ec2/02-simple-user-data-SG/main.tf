@@ -8,7 +8,7 @@ resource "aws_instance" "terraform-ec2" {
   ami               = "ami-0c0493bbac867d427"
   count             = 1
   availability_zone = "eu-west-2b"
-  instance_type     = "t2.micro"
+  instance_type     = "t3.micro"
   vpc_security_group_ids = [ aws_security_group.allow-http.id ]
   
   user_data = <<-EOF
@@ -24,7 +24,7 @@ resource "aws_instance" "terraform-ec2" {
   user_data_replace_on_change = true
 
   tags = {
-    env = "demo"
+    env = "terraform_demo2"
   }
 }
 
@@ -46,7 +46,7 @@ resource "aws_security_group" "allow-http" {
   }
 
   tags = {
-    env = "demo"
+    env = "terraform-demo2"
   }
 
 }

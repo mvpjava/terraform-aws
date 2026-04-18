@@ -19,7 +19,7 @@ resource "aws_launch_template" "apache-launch-template" {
 
     tags = {
       name = "my-terraform-instance"
-      env  = "demo"
+      env  = "terraform-demo3"
     }
   }
 
@@ -56,7 +56,7 @@ resource "aws_security_group" "allow-http" {
   }
 
   tags = {
-    env = "demo"
+    env = "terraform-demo3"
   }
 
 }

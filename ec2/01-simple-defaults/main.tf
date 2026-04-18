@@ -15,9 +15,9 @@ resource "aws_instance" "terrafform-ec2" {
   ami               = "ami-0c0493bbac867d427"
   count             = 1
   availability_zone = "eu-west-2b"
-  instance_type     = "t2.micro"
+  instance_type     = "t3.micro"
 
   tags = {
-    env = "demo"
+    env = "terrafrom_demo"
   }
 }

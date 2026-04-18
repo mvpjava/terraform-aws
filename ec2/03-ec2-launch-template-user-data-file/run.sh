@@ -4,7 +4,7 @@
 #terraform plan
 #terraform apply -var "server_port=80"
 
-terraform apply
+terraform apply --auto-approve
 
 public_ip=$(terraform output -raw public_ip)
 
