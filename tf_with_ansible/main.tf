@@ -47,7 +47,7 @@ resource "aws_instance" "ec2" {
     command = <<EOT
       echo "Waiting 60s for ec2 instance to be ready to ssh into ..."
       sleep 60
-      export ANSIBLE_HOST_KEY_CHECKING=False \
+      export ANSIBLE_HOST_KEY_CHECKING=False
       ansible-playbook \
         -i ${self.public_ip}, \
         --private-key ${var.path_my_ssh_key} \
